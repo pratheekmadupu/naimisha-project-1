@@ -53,46 +53,48 @@ const ChatBot = () => {
             {/* Toggle Button */}
             <button
                 onClick={() => setIsOpen(true)}
-                className="fixed bottom-6 right-6 w-16 h-16 rounded-full bg-[#00ff9d] text-black shadow-[0_0_20px_rgba(0,255,157,0.5)] flex items-center justify-center z-[100] hover:scale-110 transition-transform cursor-pointer"
+                className="fixed bottom-6 right-6 w-16 h-16 rounded-2xl bg-primary text-white shadow-xl shadow-blue-500/20 flex items-center justify-center z-[100] hover:scale-110 active:scale-95 transition-all cursor-pointer border-none"
             >
-                <MessageSquare size={28} />
-                <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-[#05060b] animate-pulse" />
+                <div className="relative">
+                    <MessageSquare size={28} />
+                    <span className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white animate-pulse" />
+                </div>
             </button>
 
             {/* Chat Window */}
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.9, y: 50 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.9, y: 50 }}
-                        className="fixed bottom-24 right-6 w-[400px] h-[600px] max-w-[calc(100vw-48px)] flex flex-col glass-card border-[#00ff9d]/30 z-[100] overflow-hidden shadow-2xl shadow-black/50"
+                        initial={{ opacity: 0, scale: 0.9, y: 50, x: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
+                        exit={{ opacity: 0, scale: 0.9, y: 50, x: 20 }}
+                        className="fixed bottom-24 right-6 w-[400px] h-[600px] max-w-[calc(100vw-48px)] flex flex-col bg-white rounded-[32px] border border-slate-200 z-[100] overflow-hidden shadow-2xl shadow-blue-900/10"
                     >
                         {/* Header */}
-                        <div className="bg-[#00ff9d] p-4 flex justify-between items-center">
-                            <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-lg bg-black/20 flex items-center justify-center">
-                                    <Bot size={20} className="text-black" />
+                        <div className="bg-primary p-6 flex justify-between items-center text-white">
+                            <div className="flex items-center gap-4">
+                                <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center">
+                                    <Bot size={24} className="text-white" />
                                 </div>
                                 <div>
-                                    <h3 className="text-black font-black text-sm uppercase tracking-tighter">Cyber Assistant</h3>
-                                    <div className="flex items-center gap-1.5 text-[9px] text-black/60 font-mono font-bold uppercase">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-black/40 animate-pulse" /> Live Now
+                                    <h3 className="font-black text-sm uppercase tracking-wider">AI Assistant</h3>
+                                    <div className="flex items-center gap-1.5 text-[9px] opacity-80 font-bold uppercase tracking-widest mt-0.5">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" /> Live Now
                                     </div>
                                 </div>
                             </div>
-                            <button onClick={() => setIsOpen(false)} className="text-black/50 hover:text-black transition-colors">
-                                <X size={24} />
+                            <button onClick={() => setIsOpen(false)} className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-white/10 transition-colors">
+                                <X size={20} />
                             </button>
                         </div>
 
                         {/* Messages */}
-                        <div ref={scrollRef} className="flex-1 overflow-y-auto p-6 space-y-4 scroll-smooth">
+                        <div ref={scrollRef} className="flex-1 overflow-y-auto p-6 space-y-6 bg-slate-50/30">
                             {messages.map((m, i) => (
                                 <div key={i} className={`flex ${m.type === 'user' ? 'justify-end' : 'justify-start'}`}>
-                                    <div className={`max-w-[85%] p-4 rounded-2xl text-sm ${m.type === 'user'
-                                        ? 'bg-[#7b61ff] text-white rounded-tr-none'
-                                        : 'bg-white/5 border border-white/5 text-slate-300 rounded-tl-none'
+                                    <div className={`max-w-[85%] p-4 rounded-2xl text-sm font-medium leading-relaxed ${m.type === 'user'
+                                        ? 'bg-primary text-white shadow-lg shadow-blue-500/10 rounded-tr-none'
+                                        : 'bg-white border border-slate-100 text-slate-700 shadow-sm rounded-tl-none'
                                         }`}>
                                         {m.text}
                                     </div>
@@ -101,21 +103,21 @@ const ChatBot = () => {
                         </div>
 
                         {/* Input */}
-                        <form onSubmit={handleSend} className="p-4 border-t border-white/5 bg-white/[0.02]">
+                        <form onSubmit={handleSend} className="p-6 bg-white border-t border-slate-100">
                             <div className="relative">
                                 <input
                                     type="text"
-                                    className="w-full bg-[#05060b] border border-white/10 rounded-xl py-4 pl-5 pr-12 text-sm outline-none focus:border-[#00ff9d]/50 transition-colors"
-                                    placeholder="Ask about threats, CVEs..."
+                                    className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 pl-6 pr-14 text-sm outline-none focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-slate-900 placeholder:text-slate-400 font-medium"
+                                    placeholder="Type your message..."
                                     value={input}
                                     onChange={e => setInput(e.target.value)}
                                 />
-                                <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-[#00ff9d] text-black flex items-center justify-center hover:scale-105 active:scale-95 transition-transform">
-                                    <Send size={16} />
+                                <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-xl bg-primary text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-transform shadow-lg shadow-blue-500/20 border-none cursor-pointer">
+                                    <Send size={18} />
                                 </button>
                             </div>
-                            <div className="mt-3 text-[9px] text-slate-600 flex items-center justify-center gap-2 uppercase tracking-widest font-mono">
-                                <Sparkles size={10} /> Powered by Cyber Intelligence AI v4.0
+                            <div className="mt-4 text-[10px] text-slate-400 flex items-center justify-center gap-2 font-black uppercase tracking-[0.15em]">
+                                <Sparkles size={12} className="text-blue-500" /> ProjectScan Intelligence v2.0
                             </div>
                         </form>
                     </motion.div>

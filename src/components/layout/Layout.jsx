@@ -5,10 +5,10 @@ import CyberBackground from '../common/CyberBackground';
 
 const Layout = ({ children }) => {
     return (
-        <div className="min-h-screen">
+        <div className="min-h-screen bg-slate-50">
             <CyberBackground />
             <Navbar />
-            <main className="relative z-10">
+            <main className="relative z-10 w-full">
                 {children}
             </main>
             <ChatBot />
