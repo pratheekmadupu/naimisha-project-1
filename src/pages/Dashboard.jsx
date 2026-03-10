@@ -129,7 +129,23 @@ const Dashboard = () => {
                                     <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-wider">
                                         <Calendar size={12} className="text-slate-300" /> {p.date}
                                     </div>
-                                    <Link to="/report" className="text-blue-600 font-bold text-xs uppercase flex items-center gap-2 hover:gap-4 transition-all">
+                                    <Link
+                                        to="/report"
+                                        state={{
+                                            report: {
+                                                globalScore: p.score,
+                                                grade: p.score >= 90 ? 'A+' : p.score >= 80 ? 'A' : 'B',
+                                                technicalAccuracy: p.score + (Math.random() * 5),
+                                                securityScore: Math.floor(Math.random() * 3),
+                                                documentationScore: 85,
+                                                efficiency: 'Optimized',
+                                                issues: [],
+                                                suggestions: [],
+                                                advancedRecommendation: "Continue with the current architecture."
+                                            }, fileName: p.name
+                                        }}
+                                        className="text-blue-600 font-bold text-xs uppercase flex items-center gap-2 hover:gap-4 transition-all"
+                                    >
                                         Open Insight <ChevronRight size={14} />
                                     </Link>
                                 </div>
